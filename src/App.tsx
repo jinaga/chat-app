@@ -1,9 +1,13 @@
 import './App.css'
+import { TopicSelector } from "./topics/TopicSelector";
+import { useTopic } from "./topics/topicViewModel";
 
 function App() {
+  const topicViewModel = useTopic();
+  
   return (
     <>
-      <h1>Jinaga Chat</h1>
+      <TopicSelector viewModel={topicViewModel} />
     </>
   )
 }
