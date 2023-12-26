@@ -1,5 +1,4 @@
-import React from "react";
-import { TopicViewModel } from "./topicViewModel"
+import { TopicViewModel } from "./topicViewModel";
 
 export interface TopicSelectorProps {
   viewModel: TopicViewModel;
