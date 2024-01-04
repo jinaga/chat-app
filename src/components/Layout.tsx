@@ -1,14 +1,12 @@
 import Sheet from '@mui/joy/Sheet';
 
-import { useMessageList } from "../messages/messageListViewModel";
-import { useTopic } from "../topics/topicViewModel";
-import MessagesPane from './MessagesPane';
-import TopicsPane from './TopicsPane';
+type LayoutProps = {
+  topicPane: () => JSX.Element;
+  messagePane: () => JSX.Element;
+};
 
-export default function Layout() {
-  const topicViewModel = useTopic();
-  const messageListViewModel = useMessageList(topicViewModel);
-  
+export default function Layout(props: LayoutProps) {
+  const { topicPane, messagePane } = props;
   return (
     <Sheet
       sx={{
@@ -36,11 +34,9 @@ export default function Layout() {
           top: 52,
         }}
       >
-        <TopicsPane
-          viewModel={topicViewModel}
-        />
+        {topicPane()}
       </Sheet>
-      <MessagesPane viewModel={messageListViewModel} />
+      {messagePane()}
     </Sheet>
   );
 }
