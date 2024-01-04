@@ -15,15 +15,15 @@ type TopicListItemProps = ListItemButtonProps & {
 };
 
 export default function TopicListItem(props: TopicListItemProps) {
-  const { topicHash: id, topicName, selectedTopicHash: selectedChatId, setSelectedTopicHash: setSelectedChat } = props;
-  const selected = selectedChatId === id;
+  const { topicHash, topicName, selectedTopicHash, setSelectedTopicHash } = props;
+  const selected = selectedTopicHash === topicHash;
   return (
     <React.Fragment>
       <ListItem>
         <ListItemButton
           onClick={() => {
             toggleMessagesPane();
-            setSelectedChat(id);
+            setSelectedTopicHash(topicHash);
           }}
           selected={selected}
           color="neutral"

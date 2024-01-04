@@ -3,8 +3,8 @@ import CssBaseline from "@mui/joy/CssBaseline";
 import { CssVarsProvider } from "@mui/joy/styles";
 import './App.css';
 import Layout from "./components/Layout";
-import MessagesPane from "./components/MessagesPane";
-import TopicsPane from "./components/TopicsPane";
+import MessagesPane from "./messages/MessagesPane";
+import TopicsPane from "./topics/TopicsPane";
 import { useMessageList } from "./messages/messageListViewModel";
 import { useTopic } from "./topics/topicViewModel";
 

@@ -2,10 +2,10 @@ import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import * as React from 'react';
-import { MessageListViewModel, MessageViewModel } from "../messages/messageListViewModel";
 import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
 import MessagesPaneHeader from './MessagesPaneHeader';
+import { MessageListViewModel, MessageViewModel } from "./messageListViewModel";
 
 type MessagesPaneProps = {
   viewModel: MessageListViewModel;

@@ -5,9 +5,9 @@ import List from '@mui/joy/List';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import { TopicViewModel } from "../topics/topicViewModel";
 import { toggleMessagesPane } from '../utils';
 import TopicListItem from './TopicsListItem';
+import { TopicViewModel } from "./topicViewModel";
 
 type TopicsPaneProps = {
   viewModel: TopicViewModel;
