@@ -2,15 +2,14 @@ import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRound
 import IconButton from '@mui/joy/IconButton';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import { UserProps } from '../types';
 import { toggleMessagesPane } from '../utils';
 
 type MessagesPaneHeaderProps = {
-  sender: UserProps;
+  title: string;
 };
 
 export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
-  const { sender } = props;
+  const { title } = props;
   return (
     <Stack
       direction="row"
@@ -42,7 +41,7 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
             component="h2"
             noWrap
           >
-            {sender.name}
+            {title}
           </Typography>
         </div>
       </Stack>

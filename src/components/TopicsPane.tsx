@@ -5,18 +5,16 @@ import List from '@mui/joy/List';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import { ChatProps } from '../types';
+import { TopicViewModel } from "../topics/topicViewModel";
 import { toggleMessagesPane } from '../utils';
 import TopicListItem from './TopicsListItem';
 
 type TopicsPaneProps = {
-  chats: ChatProps[];
-  setSelectedChat: (chat: ChatProps) => void;
-  selectedChatId: string;
+  viewModel: TopicViewModel;
 };
 
 export default function TopicsPane(props: TopicsPaneProps) {
-  const { chats, setSelectedChat, selectedChatId } = props;
+  const { viewModel } = props;
   return (
     <Sheet
       sx={{
@@ -58,9 +56,30 @@ export default function TopicsPane(props: TopicsPaneProps) {
       <Box sx={{ px: 2, pb: 1.5 }}>
         <Input
           size="sm"
-          startDecorator={<AddCircleRounded />}
           placeholder="Add topic"
           aria-label="Add topic"
+          value={viewModel.topicName}
+          onChange={(e) => {
+            viewModel.setTopicName(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              viewModel.select();
+            }
+          }}
+          endDecorator={
+            <IconButton
+              variant="plain"
+              aria-label="edit"
+              color="neutral"
+              size="sm"
+              onClick={() => {
+                viewModel.select();
+              }}
+            >
+              <AddCircleRounded />
+            </IconButton>
+          }
         />
       </Box>
       <List
@@ -70,14 +89,14 @@ export default function TopicsPane(props: TopicsPaneProps) {
           '--ListItem-paddingX': '1rem',
         }}
       >
-        {chats.map((chat) => (
+        {viewModel.topic &&
           <TopicListItem
-            key={chat.id}
-            {...chat}
-            setSelectedChat={setSelectedChat}
-            selectedChatId={selectedChatId}
+            topicHash="xxxxx"
+            topicName={viewModel.topic.name}
+            selectedTopicHash="xxxxx"
+            setSelectedTopicHash={() => {}}
           />
-        ))}
+        }
       </List>
     </Sheet>
   );

@@ -1,13 +1,14 @@
-import * as React from 'react';
 import Sheet from '@mui/joy/Sheet';
 
+import { useMessageList } from "../messages/messageListViewModel";
+import { useTopic } from "../topics/topicViewModel";
 import MessagesPane from './MessagesPane';
 import TopicsPane from './TopicsPane';
-import { ChatProps } from '../types';
-import { chats } from '../data';
 
 export default function Layout() {
-  const [selectedChat, setSelectedChat] = React.useState<ChatProps>(chats[0]);
+  const topicViewModel = useTopic();
+  const messageListViewModel = useMessageList(topicViewModel);
+  
   return (
     <Sheet
       sx={{
@@ -36,12 +37,10 @@ export default function Layout() {
         }}
       >
         <TopicsPane
-          chats={chats}
-          selectedChatId={selectedChat.id}
-          setSelectedChat={setSelectedChat}
+          viewModel={topicViewModel}
         />
       </Sheet>
-      <MessagesPane chat={selectedChat} />
+      <MessagesPane viewModel={messageListViewModel} />
     </Sheet>
   );
 }

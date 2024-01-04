@@ -2,23 +2,18 @@ import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import * as React from 'react';
-import { ChatProps, MessageProps } from '../types';
+import { MessageListViewModel, MessageViewModel } from "../messages/messageListViewModel";
 import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
 import MessagesPaneHeader from './MessagesPaneHeader';
 
 type MessagesPaneProps = {
-  chat: ChatProps;
+  viewModel: MessageListViewModel;
 };
 
 export default function MessagesPane(props: MessagesPaneProps) {
-  const { chat } = props;
-  const [chatMessages, setChatMessages] = React.useState(chat.messages);
+  const { viewModel } = props;
   const [textAreaValue, setTextAreaValue] = React.useState('');
-
-  React.useEffect(() => {
-    setChatMessages(chat.messages);
-  }, [chat.messages]);
 
   return (
     <Sheet
@@ -29,7 +24,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
         backgroundColor: 'background.level1',
       }}
     >
-      <MessagesPaneHeader sender={chat.sender} />
+      <MessagesPaneHeader title={viewModel.topicName} />
       <Box
         sx={{
           display: 'flex',
@@ -42,8 +37,8 @@ export default function MessagesPane(props: MessagesPaneProps) {
         }}
       >
         <Stack spacing={2} justifyContent="flex-end">
-          {chatMessages.map((message: MessageProps, index: number) => {
-            const isYou = message.sender === 'You';
+          {viewModel.messages.map((message: MessageViewModel, index: number) => {
+            const isYou = message.id === 'You';
             return (
               <Stack
                 key={index}
@@ -51,7 +46,12 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 spacing={2}
                 flexDirection={isYou ? 'row-reverse' : 'row'}
               >
-                <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
+                <ChatBubble variant={isYou ? 'sent' : 'received'}
+                  id={message.id}
+                  content={message.text}
+                  sender="You"
+                  timestamp={new Date().toLocaleTimeString()}
+                />
               </Stack>
             );
           })}
@@ -61,17 +61,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
         textAreaValue={textAreaValue}
         setTextAreaValue={setTextAreaValue}
         onSubmit={() => {
-          const newId = chatMessages.length + 1;
-          const newIdString = newId.toString();
-          setChatMessages([
-            ...chatMessages,
-            {
-              id: newIdString,
-              sender: 'You',
-              content: textAreaValue,
-              timestamp: 'Just now',
-            },
-          ]);
+          viewModel.sendMessage(textAreaValue);
         }}
       />
     </Sheet>

@@ -5,19 +5,17 @@ import ListItemButton, { ListItemButtonProps } from '@mui/joy/ListItemButton';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import * as React from 'react';
-import { ChatProps, MessageProps, UserProps } from '../types';
 import { toggleMessagesPane } from '../utils';
 
 type TopicListItemProps = ListItemButtonProps & {
-  id: string;
-  sender: UserProps;
-  messages: MessageProps[];
-  selectedChatId?: string;
-  setSelectedChat: (chat: ChatProps) => void;
+  topicHash: string;
+  topicName: string;
+  selectedTopicHash?: string;
+  setSelectedTopicHash: (hash: string) => void;
 };
 
 export default function TopicListItem(props: TopicListItemProps) {
-  const { id, sender, messages, selectedChatId, setSelectedChat } = props;
+  const { topicHash: id, topicName, selectedTopicHash: selectedChatId, setSelectedTopicHash: setSelectedChat } = props;
   const selected = selectedChatId === id;
   return (
     <React.Fragment>
@@ -25,7 +23,7 @@ export default function TopicListItem(props: TopicListItemProps) {
         <ListItemButton
           onClick={() => {
             toggleMessagesPane();
-            setSelectedChat({ id, sender, messages });
+            setSelectedChat(id);
           }}
           selected={selected}
           color="neutral"
@@ -37,7 +35,7 @@ export default function TopicListItem(props: TopicListItemProps) {
         >
           <Stack direction="row" spacing={1.5}>
             <Box sx={{ flex: 1 }}>
-              <Typography level="title-sm">{sender.name}</Typography>
+              <Typography level="title-sm">{topicName}</Typography>
             </Box>
             <Box
               sx={{
